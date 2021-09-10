@@ -1,0 +1,4 @@
+setxkbmap -layout us intl,de -option grp:menu_toggle -option terminate:ctrl_alt_bksp 
+TZ='Europe/Berlin'; export TZ
+
+source ~/.xinitrc

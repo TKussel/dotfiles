@@ -1,0 +1,68 @@
+! Colores
+!----------------------------------------------------------------------
+!#include ".config/termcolours/jellybeans"
+!#include ".config/termcolours/hybrid"
+!#include ".config/termcolours/base16-solarized.light"
+#include ".config/termcolours/hybrid_e7"
+!#include ".config/termcolours/s3r0"
+##include ".config/termcolours/nix_e7"
+
+
+! URXVT
+!----------------------------------------------------------------------
+! Colores
+! bold, italic, underline
+URxvt.colorBD: #B5BD68
+URxvt.colorIT: #B294BB
+URxvt.colorUL: #81A2BE
+! Fuentes
+! Para los caracteres especiales de la línea de powerline es necesario
+! una fuente powerline. Inconsolata for powerline los tienes, pero solo
+! a tamaño 12.
+! Uso el Inconsolata normal, con resguardo de terminespowerline y asi
+! funcionan. :)
+
+!URxvt.letterSpace: -2
+!URxvt.font: xft:Inconsolata:size=12:hintstyle=hintfull, -xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1
+!URxvt.boldFont: xft:Inconsolata:size=12:hintstyle=hintfull, -xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1
+!URxvt.italicFont: xft:Inconsolata:size=12:hintstyle=hintfull, -xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1
+!URxvt.boldItalicFont: xft:Inconsolata:size=12:hintstyle=hintfull, -xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1
+
+URxvt.font: xft:Inconsolata:size=12:antialias=true,otf:PowerlineSymbols:size=12:antialias=true
+
+!URxvt.letterSpace: -1
+!URxvt*font: xft:inconsolata for Powerline:size=10
+!URxvt*boldFont: xft:inconsolata for Powerline:size=10
+!URxvt*italicFont: xft:inconsolata for Powerline:size=10
+!URxvt*bolditalicFont: xft:inconsolata for Powerline:size=10
+
+!URxvt*font: xft:terminus:hinting=true:pixelsize=12:antialias=true, -xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1
+!URxvt*boldFont: xft:terminus:style=bold:hinting=true:pixelsize=12:antialias=true, -xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1
+!URxvt*italicFont: xft:terminus:style=italic:hinting=true:pixelsize=12:antialias=true, -xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1
+!URxvt*boldItalicFont: xft:terminus:style=bolditalic:hinting=true:pixelsize=12:antialias=true, -xos4-terminesspowerline-medium-r-normal--12-120-72-72-c-60-iso10646-1
+
+! Varios
+URxvt.depth: 32
+URxvt*scrollBar: false
+URxvt.urgentOnBell: True
+URxvt.visualBell: False
+URxvt*saveLines: 1024
+URxvt*mouseWheelScrollPage: true
+! Extensions ~/.urxvt./ext
+URxvt.perl-ext-common: default,clipboard,keyboard-select,url-select
+! Clipboard
+URxvt.keysym.C-S-C: perl:clipboard:copy
+URxvt.keysym.C-S-V: perl:clipboard:paste
+URxvt.keysym.C-S-W: perl:clipboard:paste_escaped
+URxvt.clipboard.copycmd:  xsel -ib
+URxvt.clipboard.pastecmd: xsel -ob
+! Keyboard-select
+URxvt.keysym.C-Escape: perl:keyboard-select:activate
+URxvt.keysym.C-S-S: perl:keyboard-select:search
+! Url-select
+URxvt.keysym.C-S-U: perl:url-select:select_next
+URxvt.url-select.autocopy: true
+URxvt.url-select.button: 1
+URxvt.url-select.launcher: /usr/bin/firefox
+URxvt.url-select.underline: true
+

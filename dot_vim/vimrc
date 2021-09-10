@@ -1,0 +1,467 @@
+source ~/.vim/plugins.vim
+" Following three lines automatically executed by vim-plug
+"syntax on
+"syntax enable
+"filetype plugin indent on
+set conceallevel=0
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
+
+" Theming
+set background=dark
+colorscheme deus 
+" airline fonts are installed
+let g:airline_powerline_fonts = 1
+"if has("gui_running")
+  "if has("gui_gtk")
+    "set guifont=Inconsolata-g\ for\ Powerline\ 12
+  "endif
+"endif
+
+" Display extra whitespace
+set list listchars=tab:»·,trail:·,nbsp:·
+" IndentLine Config
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+
+" Make it obvious where 80 characters is
+set textwidth=80
+set colorcolumn=+1
+
+" Open new split panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
+
+" gVim specific
+set guioptions-=m " remove menu
+set guioptions-=T " remove toolbar
+
+" Always use vertical diffs
+set diffopt+=vertical
+
+" Use ripgrep
+if executable('rg')
+  " Use rg over Grep
+  set grepprg=rg\ --no-heading\ --vimgrep
+set grepformat=%f:%l:%c:%m
+endif
+
+
+" Indenting
+set expandtab
+set shiftwidth=2
+set softtabstop=2
+
+" Im Insertmodus soll die aktuelle Zeile schwarz unterlegt werden.
+augroup currentline
+  autocmd!
+  autocmd InsertEnter * set cul
+  autocmd InsertLeave * set nocul
+augroup END
+hi CursorLine cterm=NONE ctermbg=black
+
+set nu "Linenumber
+set hls "Pattern Higlight
+set incsearch " Sucht beim Tippen
+set wildmode=longest,list "Filenam Ergänz beim Öffnen TAB und TAB+TAB steuern
+set wildmenu " Completion Menu
+set switchbuf=useopen,usetab " Falls buffer schon im Tab offen ist nimm diesen
+let mapleader="," " <Leader> Key. Default ist \
+let maplocalleader="-"
+
+" Numbers
+set number
+set numberwidth=5
+
+" Termdebug
+nnoremap <leader>D :packadd termdebug<CR>:Termdebug<space>
+
+" Vim-QuickRun
+nnoremap <leader>e :QuickRunExecute<CR>
+
+" Beacause escape is so inconvenient
+inoremap jk <ESC>
+
+"set rtp+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim/
+
+" Always show statusline
+set laststatus=2
+
+" Edit .vimrc
+nmap <C-E><C-V> :tabedit ~/.vim/vimrc<CR>
+
+" deoplete
+
+"call deoplete#custom#option('sources', {
+"\ '_': ['ale', 'ultisnips'],
+"\})
+"call deoplete#custom#var('omni', 'input_patterns', {
+      "\ 'tex': g:vimtex#re#deoplete
+      "\})
+
+"if (executable('pyls'))
+  "let s:pyls_path = fnamemodify(g:python_host_prog, ':h') . '/'. 'pyls'
+  "augroup LspPython
+    "autocmd!
+    "autocmd User lsp_setup call lsp#register_server({
+          "\ 'name': 'pyls',
+          "\ 'cmd': {server_info->['pyls']},
+          "\ 'whitelist': ['python']
+          "\ })
+  "augroup END
+"endif
+"if executable('rls')
+    "au User lsp_setup call lsp#register_server({
+        "\ 'name': 'rls',
+        "\ 'cmd': {server_info->['rustup', 'run', 'nightly', 'rls']},
+        "\ 'whitelist': ['rust'],
+        "\ })
+"endif
+"if executable('clangd')
+    "au User lsp_setup call lsp#register_server({
+        "\ 'name': 'clangd',
+        "\ 'cmd': {server_info->['clangd', '-background-index']},
+        "\ 'whitelist': ['c', 'cpp', 'objc', 'objcpp'],
+        "\ })
+"endif
+"if executable('texlab')
+    "au User lsp_setup call lsp#register_server({
+        "\ 'name': 'texlab',
+        "\ 'cmd': {server_info->['texlab']},
+        "\ 'whitelist': ['tex'],
+        "\ })
+"endif
+"if !exists('g:deoplete#omni#input_patterns')
+    "let g:deoplete#omni#input_patterns = {}
+"endif
+"let g:deoplete#omni#input_patterns.tex = 
+        "\   '\\(?:'
+        "\  .   '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
+        "\  .  '|\w*ref(?:\s*\{[^}]*|range\s*\{[^,}]*(?:}{)?)'
+        "\  .  '|hyperref\s*\[[^]]*'
+        "\  .  '|includegraphics\*?(?:\s*\[[^]]*\]){0,2}\s*\{[^}]*'
+        "\  .  '|(?:include(?:only)?|input)\s*\{[^}]*'
+        "\  .')'
+" COC-nvim
+"let g:coc_clobal_extensions = [
+"]
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Some servers have issues with backup files, see #649.
+set nobackup
+set nowritebackup
+
+" Give more space for displaying messages.
+set cmdheight=2
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Don't pass messages to |ins-completion-menu|.
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+set signcolumn=yes
+
+
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
+" position. Coc only does snippet and additional edit on confirm.
+" <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
+if exists('*complete_info')
+  inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+else
+  inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current line.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Introduce function text object
+" NOTE: Requires 'textDocument.documentSymbol' support from the language server.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+" Use <TAB> for selections ranges.
+" NOTE: Requires 'textDocument/selectionRange' support from the language server.
+" coc-tsserver, coc-python are the examples of servers that support it.
+nmap <silent> <TAB> <Plug>(coc-range-select)
+xmap <silent> <TAB> <Plug>(coc-range-select)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Mappings using CoCList:
+" Show all diagnostics.
+nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+
+" clang-format
+
+let g:clang_format#style_options = {
+            \ "Standard" : "C++11",
+            \ "BasedOnStyle" : "Chromium"}
+
+
+"map <C-K> :pyf /usr/share/clang/clang-format-3.8/clang-format.py<cr>
+"imap <C-K> <c-o>:pyf /usr/share/clang/clang-format-3.8/clang-format.py<cr>
+
+"UltiSnips
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+" TOC settings
+let g:vimtex_toc_config = {
+      \ 'name' : 'TOC',
+      \ 'layers' : ['content', 'todo', 'include'],
+      \ 'resize' : 1,
+      \ 'split_width' : 50,
+      \ 'todo_sorted' : 0,
+      \ 'show_help' : 1,
+      \ 'show_numbers' : 1,
+      \ 'mode' : 2,
+      \}
+
+"make shortcuts
+"let compiler="CXX=g++"
+"let makepath="build"
+"nmap <S-M> :execute "make -j 2 -C ".makepath."/release ".compiler \| copen \| redraw!<CR>
+"nmap <S-M><S-D> :execute "make -j 2 -C ".makepath."/debug ".compiler \| copen \| redraw!<CR>
+"nmap <S-M><S-T> :execute "make test -C ".makepath."/release " \| copen \| redraw!<CR>
+"nmap <S-M><S-D><S-T> :execute "make test -C ".makepath."/debug " \| copen \| redraw!<CR>
+
+"search stuff...
+nmap  :let @/ = ""<CR>
+imap  <ESC>:let @/ = ""<CR>i
+
+"ALE Config
+nnoremap <leader>cf <Plug>(ale_fix)
+nnoremap <leader>cg :ALEGoToDefinition<CR>
+nnoremap <leader>cgs :ALEGoToDefinitionInSplit<CR>
+nnoremap <leader>cgv :ALEGoToDefinitionInVSplit<CR>
+let g:ale_fixers = {
+      \'cpp': [
+      \'clangtidy',
+      \'clang-format',
+      \'uncrustify'
+      \],
+      \}
+
+let g:ale_disable_lsp = 1
+"YouCompleteMe
+"let g:ycm_autoclose_preview_window_after_completion = 1
+"nnoremap <leader>t :YcmCompleter GetType<CR>
+"nnoremap <leader>p :YcmCompleter GetParent<CR>
+"nnoremap <C-G><C-D> :YcmCompleter GetDoc<CR>
+"nnoremap <leader>g : YcmCompleter GoTo<CR>
+"nnoremap <leader>f :YcmCompleter FixIt<CR>
+"let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+"let g:ycm_confirm_extra_conf = 0
+"let g:ycm_register_as_syntastic_checker = 1 "default 1
+"let g:Show_diagnostics_ui = 1 "default 1
+
+"Vimtex together with YCM
+"if !exists('g:ycm_semantic_triggers')
+  "let g:ycm_semantic_triggers = {}
+"endif
+"au VimEnter * let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
+
+"will put icons in Vim's gutter on lines that have a diagnostic set.
+"Turning this off will also turn off the YcmErrorLine and YcmWarningLine
+"highlighting
+"let g:ycm_enable_diagnostic_signs = 1
+"let g:ycm_enable_diagnostic_highlighting = 0
+"let g:ycm_always_populate_location_list = 1 "default 0
+"let g:ycm_open_loclist_on_ycm_diags = 1 "default 1
+"let g:ycm_rust_src_path = '/usr/lib/rustlib/src/rust/src'
+
+" Fugitive 
+" Delete Buffer if Gedit object is left
+autocmd BufReadPost fugitive://* set bufhidden=delete
+
+" tagbar
+nnoremap <F8> :TagbarToggle<CR>
+
+" Exclude Javascript files in :Rtags via rails.vim due to warnings when parsing
+"let g:Tlist_Ctags_Cmd="ctags --exclude='*.js'"
+
+" Index ctags from any project, including those outside Rails
+noremap <Leader>ct :!ctags -R .<CR>
+let g:gutentags_enabled=0
+
+" Quicker window movement
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" Vimtex Flavour
+let g:tex_flavor = 'latex'
+
+" airline setup
+let g:airline#extensions#tabline#enabled = 1
+
+" Get off my lawn
+nnoremap <Left> :echoe "Use h"<CR>
+nnoremap <Right> :echoe "Use l"<CR>
+nnoremap <Up> :echoe "Use k"<CR>
+nnoremap <Down> :echoe "Use j"<CR>
+
+nnoremap <F9> :UndotreeToggle<CR>
+if has("persistent_undo")
+    set undodir=~/.undodir/
+    set undofile
+endif
+
+"Remove all trailing whitespace by pressing F5
+nnoremap <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar><CR>
+"Remove all trailing whitespace after semicolon by pressing F6
+nnoremap <F6> :let _s=@/<Bar>:%s/;\s\+$/;/e<Bar>:let @/=_s<Bar><CR>
+
+" NERDtree
+nnoremap <F7> :NERDTreeToggle<CR>
+
+" Termdebug
+nnoremap <leader>D :packadd termdebug<CR>:Termdebug<space>
+
+" Switch to english layout if Ö is pressed, or alert
+if executable('xkb-switch')
+  nnoremap Ö :silent !xkb-switch -s us<CR>:
+else
+  nnoremap Ö :echoe "Switch to English layout!"<CR>
+endif
+
+" Run commands that require an interactive shell
+nnoremap <Leader>r :RunInInteractiveShell<space>
+
+" vimtex
+let g:tex_conceal = ""
+let g:vimtex_view_method = 'zathura'
+
+augroup filetype
+  autocmd!
+  "map to <Leader>cf in C++ code
+  autocmd FileType c,cpp,objc nnoremap <buffer><Leader>cf :<C-u>ClangFormat<CR>
+  autocmd FileType c,cpp,objc vnoremap <buffer><Leader>cf :ClangFormat<CR>
+  autocmd FileType tex setlocal spell
+
+  " Display MP-SPDZ .mpc files as python
+  au BufNewFile,BufRead *.mpc set filetype=python
+augroup END
+
+" vimWiki und VimZettel
+let g:vimwiki_list = [{'path':'~/scratchbox/vimwiki/markdown/','ext':'.md','syntax':'markdown'}, {"path":"~/scratchbox/vimwiki/wiki/"}]
+" Filename format. The filename is created using strftime() function
+let g:zettel_format = "%y%m%d-%H%M"
+" command used for VimwikiSearch 
+" default value is "ag". To use other command, like ripgrep, pass the
+" command line and options:
+let g:zettel_fzf_command = "rg --column --line-number --ignore-case --no-heading --color=always "
+" Disable default keymappings
+"let g:zettel_default_mappings = 0 
+" This is basically the same as the default configuration
+augroup filetype_vimwiki
+  autocmd!
+  autocmd FileType vimwiki imap <silent> [[ [[<esc><Plug>ZettelSearchMap
+  autocmd FileType vimwiki nmap T <Plug>ZettelYankNameMap
+  autocmd FileType vimwiki xmap z <Plug>ZettelNewSelectedMap
+  autocmd FileType vimwiki nmap gZ <Plug>ZettelReplaceFileWithLink
+augroup END
+
+" Set template and custom header variable for the second Wiki
+let g:zettel_options = [{},{"front_matter" : {"tags" : ""}, "template" :  "~/scratchbox/vimwiki/markdown/zettelkastentemplate.md"}]
+
+let g:scratchpad_path = '.scratchpads'
+let g:scratchpad_ftype = 'md'
+nmap dsp <Plug>(ToggleScratchPad)

@@ -1,0 +1,22 @@
+{
+  "diagnostic.displayByAle": true,
+  "diagnostic.refreshAfterSave": true,
+  "suggest.enablePreview": true,
+  "suggest.minTriggerInputLength": 2,
+  "suggest.snippetIndicator": "[+] ",
+  "suggest.timeout": 1000,
+  "suggest.removeDuplicateItems": true,
+  "list.maxHeight": 18,
+  "coc.source.ultisnips.enable": true,
+  "coc.source.omni.filetypes": ["foam"],
+  "coc.source.neco.shortcut": "VIM",
+  "python.jediEnabled": false,
+  "python.trace.server": "messages",
+  "python.linting.enabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.analysis.diagnosticEnabled": true,
+  "coc.preferences.useQuickfixForLocations": true,
+  "clangd.semanticHighlighting": true,
+  "clangd.compilationDatabasePath": "./build",
+  "clangd.arguments": ["--background-index", "--clang-tidy", "-j=3"]
+}
